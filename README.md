@@ -1,5 +1,6 @@
 # SIGTYP 2020 Shared Task : Prediction of Typological Features
 
+To participate in the shared task, you will build a system that can predict typological properties of languages, given a handful of observed features. Training examples and development examples will be provided. All submitted systems will be compared on a held-out test set.
 
 ## Data Format
 
@@ -18,7 +19,7 @@ jpn      Japanese      case_syncretism=no_case_marking | order_of_adjective_and_
 ```
 ## Data
 
-The model will have access to typology features across a set of languages. These features are derived from the WALS database. For the purpose of this shared task, we will provide a subset of languages/features as shown below:
+The model will have access to typology features across a set of languages. These features are derived from the [WALS database](https://wals.info/). For the purpose of this shared task, we will provide a subset of languages/features as shown below:
 ```
 tur      Turkish      case_syncretism=no_syncretism | order_of_subject,_object,_and_verb= SOV | number_of_genders=none | definite_articles=no_definite_but_indefinite_article
 hin      Hindi      case_syncretism=core_and_non_core | order_of_subject,_object,_and_verb= SOV | number_of_genders=two | definite_articles=no_definite_but_indefinite_article
