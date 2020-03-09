@@ -26,5 +26,7 @@ urd      Urdu      order_of_subject,_object,_and_verb= SOV | definite_articles=n
 jpn      Japanese      order_of_subject,_object,_and_verb= SOV | prefixing_vs_suffixing_in_inflectional_morphology=strongly_suffixing
 ```
 Column 1: Language ID
+
 Column 2: Language name
+
 Column 3: It contains the feature-value pairs for each language, where features are separated by ‘|’
