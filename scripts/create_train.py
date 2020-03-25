@@ -30,7 +30,7 @@ for l in all_rows:
 
 otherlang_coo = []
 for m in all4:
-    if m["family"] == "Mayan" or m["genus"] == "Tucanoan" or m["genus"] == "Madang" or m["genus"] == "Mahakiranti" or m["genus"] == "Northern Pama-Nyungan" or m["genus"] == "Nilotic":
+    if m["genus"] == "Mayan" or m["genus"] == "Tucanoan" or m["genus"] == "Madang" or m["genus"] == "Mahakiranti" or m["genus"] == "Northern Pama-Nyungan" or m["genus"] == "Nilotic":
       cc = (m["latitude"], m["longitude"])
       otherlang_coo.append(cc)
 
@@ -41,7 +41,7 @@ for m in all4:
       for coord2 in otherlang_coo: 
          dist = geopy.distance.geodesic(coord1, coord2)
          distances.append(dist)
-      if m["family"] != "Mayan" and m["genus"] != "Tucanoan" and m["genus"] != "Madang" and m["genus"] != "Mahakiranti" and m["genus"] != "Northern Pama-Nyungan" and m["genus"] != "Nilotic" and  all(i > 1000 for i in distances): 
+      if m["genus"] != "Mayan" and m["genus"] != "Tucanoan" and m["genus"] != "Madang" and m["genus"] != "Mahakiranti" and m["genus"] != "Northern Pama-Nyungan" and m["genus"] != "Nilotic" and  all(i > 1000 for i in distances): 
          w = m['wals_code'] 
          fa = m['family']  
          f = list(m.items())[10:] 
@@ -72,7 +72,7 @@ for m in all4:
     for coord2 in otherlang_coo:
        dist = geopy.distance.geodesic(coord1, coord2)
        distances.append(dist)
-    if m["family"] != "Mayan" and m["genus"] != "Tucanoan" and m["genus"] != "Madang" and m["genus"] != "Mahakiranti" and m["genus"] != "Northern Pama-Nyungan" and m["genus"] != "Nilotic" and  all(i > 1000 for i in distances): 
+    if m["genus"] != "Mayan" and m["genus"] != "Tucanoan" and m["genus"] != "Madang" and m["genus"] != "Mahakiranti" and m["genus"] != "Northern Pama-Nyungan" and m["genus"] != "Nilotic" and  all(i > 1000 for i in distances): 
        w = m['wals_code']
        name = m["Name"]
        lat = m["latitude"]
