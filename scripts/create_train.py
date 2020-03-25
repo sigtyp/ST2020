@@ -1,5 +1,4 @@
 # Python 3.7.6
-# Giuseppe G. A. Celano
 
 import csv
 import geopy.distance 
