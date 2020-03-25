@@ -1,7 +1,8 @@
 # Python 3.7.6
 
 import csv
-import geopy.distance 
+import geopy.distance
+from collections import OrderedDict
 
 all_rows = [] 
 with open("language.csv") as f:
@@ -28,12 +29,14 @@ for l in all_rows:
               new_row[h[0]] = h[1]
           all4.append(new_row)
 
+# find geo-coordinates for some languages
 otherlang_coo = []
 for m in all4:
     if m["genus"] == "Mayan" or m["genus"] == "Tucanoan" or m["genus"] == "Madang" or m["genus"] == "Mahakiranti" or m["genus"] == "Northern Pama-Nyungan" or m["genus"] == "Nilotic":
       cc = (m["latitude"], m["longitude"])
       otherlang_coo.append(cc)
 
+# find languages which do not belong to certain genera and are distant more than 1000 km
 pre_fin = [] 
 for m in all4: 
       coord1 = (m["latitude"], m["longitude"])
@@ -93,11 +96,52 @@ for m in all4:
 
 new_fin = fin[0: round(len(fin) * 0.9)]
 sel10 = fin[round(len(fin) * 0.9):]
-dev = sel10[:round(len(sel10) * 0.5)]
-test = sel10[round(len(sel10) * 0.5):]
+dev_add = sel10[:round(len(sel10) * 0.5)]
+test_add = sel10[round(len(sel10) * 0.5):]
 
-# create the file
+# save train data
 with open("train.csv", "wt") as f:
-    print("wals_code	name	latitude	longitude	genus	family	countrycodes	features", file=f)
+    print("wals_code  name  latitude  longitude genus family  countrycodes  features", file=f)
     for g in new_fin:
+        print(g, file=f)
+
+
+# crete dev and test
+all_ex = []
+for l in all_rows:
+    if l["genus"] == "Mayan" or l["genus"] == "Tucanoan" or l["genus"] == "Madang" or l["genus"] == "Mahakiranti" or l["genus"] == "Northern Pama-Nyungan" or l["genus"] == "Nilotic":
+        new_row = OrderedDict()
+        f = list(l.items())[10:]
+        c = 0
+        ff = []
+        for t  in f:
+            if t[1] != "":
+                c += 1
+                ff.append(t)
+        if c > 3:
+              w = l['wals_code']
+              name = l["Name"]
+              lat = l["latitude"]
+              lon = l["longitude"]
+              gen = l["genus"]
+              fa = l['family']
+              nn = []
+              for n in ff:
+                  if n[0] in a:
+                    j = n[0].split(" ", 1)
+                    s = j[1].replace(" ", "_") + "=" + n[1]
+                    nn.append(s)
+              if len(nn) > 3:  # to be sure the features are at least 4
+                vv = "|".join(nn)
+                all_ex.append(w + "\t" + name + "\t" + lat + "\t" + lon + "\t" + gen + "\t" + fa + "\t" + ccod + "\t" + vv)
+
+# select 20%
+p20 = round(len(all_ex) * 0.2) 
+
+dev = all_ex[0: p20] + dev_add
+
+# save dev data
+with open("dev.csv", "wt") as f:
+    print("wals_code  name  latitude  longitude genus family  countrycodes  features", file=f)
+    for g in dev:
         print(g, file=f)
