@@ -28,21 +28,20 @@ for l in all_rows:
               new_row[h[0]] = h[1]
           all4.append(new_row)
 
-# find geo-coordinates of Mayan languages
-mayan_coo = []
+otherlang_coo = []
 for m in all4:
-    if m["family"] == "Mayan":
+    if m["family"] == "Mayan" or m["genus"] == "Tucanoan" or m["genus"] == "Madang" or m["genus"] == "Mahakiranti" or m["genus"] == "Northern Pama-Nyungan" or m["genus"] == "Nilotic":
       cc = (m["latitude"], m["longitude"])
-      mayan_coo.append(cc)
+      otherlang_coo.append(cc)
 
-
-# find the languages not being Mayan and being distant more than 1000 km
 pre_fin = [] 
 for m in all4: 
-      coord1 = (m["latitude"], m["longitude"]) 
-      for coord2 in mayan_coo: 
-         dist = geopy.distance.geodesic(coord1, coord2) 
-      if m["family"] != "Mayan" and  dist > 1000: 
+      coord1 = (m["latitude"], m["longitude"])
+      distances = []
+      for coord2 in otherlang_coo: 
+         dist = geopy.distance.geodesic(coord1, coord2)
+         distances.append(dist)
+      if m["family"] != "Mayan" and m["genus"] != "Tucanoan" and m["genus"] != "Madang" and m["genus"] != "Mahakiranti" and m["genus"] != "Northern Pama-Nyungan" and m["genus"] != "Nilotic" and  all(i > 1000 for i in distances): 
          w = m['wals_code'] 
          fa = m['family']  
          f = list(m.items())[10:] 
@@ -65,15 +64,15 @@ for f in all_feat:
    if count > 9:
      fts[f] = count
 
-# create the list of languages not being Mayan, being distant more than 1000 km, with more than 3 features,  
-# with features being in more than 9 languages
 a = list(fts.keys())
 fin = []
 for m in all4:
     coord1 = (m["latitude"], m["longitude"])
-    for coord2 in mayan_coo:
+    distances = []
+    for coord2 in otherlang_coo:
        dist = geopy.distance.geodesic(coord1, coord2)
-    if m["family"] != "Mayan" and  dist > 1000:
+       distances.append(dist)
+    if m["family"] != "Mayan" and m["genus"] != "Tucanoan" and m["genus"] != "Madang" and m["genus"] != "Mahakiranti" and m["genus"] != "Northern Pama-Nyungan" and m["genus"] != "Nilotic" and  all(i > 1000 for i in distances): 
        w = m['wals_code']
        name = m["Name"]
        lat = m["latitude"]
@@ -92,8 +91,13 @@ for m in all4:
          vv = "|".join(nn)
          fin.append(w + "\t" + name + "\t" + lat + "\t" + lon + "\t" + gen + "\t" + fa + "\t" + ccod + "\t" + vv)
 
+new_fin = fin[0: round(len(fin) * 0.9)]
+sel10 = fin[round(len(fin) * 0.9):]
+dev = sel10[:round(len(sel10) * 0.5)]
+test = sel10[round(len(sel10) * 0.5):]
+
 # create the file
 with open("train.csv", "wt") as f:
     print("wals_code	name	latitude	longitude	genus	family	countrycodes	features", file=f)
-    for g in fin:
+    for g in new_fin:
         print(g, file=f)
