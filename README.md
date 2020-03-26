@@ -38,4 +38,4 @@ Column 6: Family
 
 Column 7: Country Codes
 
-Column 3: It contains the feature-value pairs for each language, where features are separated by ‘|’
+Column 8: It contains the feature-value pairs for each language, where features are separated by ‘|’
