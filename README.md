@@ -1,6 +1,10 @@
-# SIGTYP 2020 Shared Task : Prediction of Typological Features
+# SIGTYP 2020 Shared Task: Prediction of Typological Features
 
 To participate in the shared task, you will build a system that can predict typological properties of languages, given a handful of observed features. Training examples and development examples will be provided. All submitted systems will be compared on a held-out test set.
+
+## Final results
+
+To obtain the final results, run `python scripts/score.py [TSVFILE] [more TSVFILES]`. Note that the script runs on cleaned input files which may not be the file you submitted. Generated plots are in `results_plots.ods`, they do *not* interact with the python script.
 
 ## Data Format
 
